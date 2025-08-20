@@ -10,6 +10,51 @@ Produces a filtered image that resembles the output of an old television using Q
 **Line Phase Shift**: Offsets the wave produced by the Horizontal Carrier Frequency. In most cases this value is unnoticable, and is best left at the default of 3.14.
 
 ---------------------------------------------------------------------------------------------------------------------------
+New Unity Version Support: **2022.2**
+---------------------------------------------------------------------------------------------------------------------------
+Unity 2022.2 is now the newest version that the Haunted PSX Render Pipeline now supports. Previously it only supported up to 2021-LTS.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix 2022: Volume Editors **VolumeComponentEditor attribute deprecated**
+---------------------------------------------------------------------------------------------------------------------------
+VolumeComponentEditor attribute was deprecated in 2022. Simply use the CustomEditor attribute instead, which exists in all versions of unity that the haunted psx render pipeline supports.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix 2022: Shader Functions **GetViewToWorldMatrix Declaration**
+---------------------------------------------------------------------------------------------------------------------------
+In Core versions less than 14.0 (2021 and older), GetViewToWorldMatrix and TransformViewToWorld are not defined yet in SpaceTransforms.hlsl.
+But in 14.0, 2022 and up, they are.
+Currently we have no way of detecting the version of core and static branching in our shaders.
+Instead, we simply define our own PSX variants that mimic the functions in newer versions of SpaceTransforms.hlsl, and use those everywhere so that we always have compatability.
+
+---------------------------------------------------------------------------------------------------------------------------
+New Unity Version Support: **2021-LTS**
+---------------------------------------------------------------------------------------------------------------------------
+Unity 2021 LTS is now the newest version that the Haunted PSX Render Pipeline now supports. Previously it only supported up to 2020-LTS.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix Fog Volume: **Color LUT Mode: Texture Cube**
+---------------------------------------------------------------------------------------------------------------------------
+Many platforms, such as WebGL 2.0 do not support performing texture cube samples or loads in a vertex shader. This caused shaders in Color Lut Mode: Texture Cube to not compile in WebGL 2.0.
+Rather than splitting behavior on platforms, instead, we go for consistency, and now force fog to be evaluated per-pixel, if Color LUT Mode is set to Texture Cube.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix PSXLit: **MetaPass Uninitialized Vertex Color in Split Color and Lighting Mode**
+---------------------------------------------------------------------------------------------------------------------------
+Fix legitimate shader warning where the vertex color varying was not initialized when in vertex color mode split color and lighting.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix PSXLit: **Enable GPU Instancing**
+---------------------------------------------------------------------------------------------------------------------------
+Enable GPU Instancing on PSXLit materials no works as expected. Multiple instanced draws may occur in a single instanced draw call without flickering in and out, as it did before.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix UV Animation Mode: **Flipbook**
+---------------------------------------------------------------------------------------------------------------------------
+Fixed flipbook uv calculation bugs that caused unintentional drop of final flipbook frame. Also fixed bug where texture filtering (if enabled) could bleed across flipbook page boundaries. Thanks for reporting the bug Visuwyg!
+
+
+---------------------------------------------------------------------------------------------------------------------------
 New Volume Feature: **Terrain Grass**
 ---------------------------------------------------------------------------------------------------------------------------
 The Terrain Grass Volume allows the Haunted PSX Render Pipeline to expose additional custom properties for the Terrain Grass shaders.
